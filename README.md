@@ -1,26 +1,13 @@
-# Elasticsearch, Logstash, Kibana (ELK) Docker image
+# Elasticsearch, Logstash, Kibana (ELK) Docker image for IBM Bluemix Development and Deployment
 
-[![](https://badge.imagelayers.io/sebp/elk:latest.svg)](https://imagelayers.io/?images=sebp/elk:latest 'Get your own badge on imagelayers.io')
 
-This Docker image provides a convenient centralised log server and log management web interface, by packaging Elasticsearch, Logstash, and Kibana, collectively known as ELK.
+This Docker image is a complete log management stack that is intended to be deployed on IBM Bluemix containers, managing 
+the logs of Bluemix applications, specifically during development.  It provides a quick easy way to manage and monitor 
+Bluemix applications, providing debugging information useful in tracking down intermittent and long running issues.
 
-The following tags are available:
+This image is not intended to be used in production loads, where it might make more sense to manage separate containers for each component.
 
-- `es232_l232_k450`, `latest`: Elasticsearch 2.3.2, Logstash 2.3.2, and Kibana 4.5.0.
-
-- `es231_l231_k450`: Elasticsearch 2.3.1, Logstash 2.3.1, and Kibana 4.5.0.
- 
-- `es230_l230_k450`: Elasticsearch 2.3.0, Logstash 2.3.0, and Kibana 4.5.0.
-
-- `es221_l222_k442`: Elasticsearch 2.2.1, Logstash 2.2.2, and Kibana 4.4.2.
-
-- `es220_l222_k441`: Elasticsearch 2.2.0, Logstash 2.2.2, and Kibana 4.4.1.
-
-- `es220_l220_k440`: Elasticsearch 2.2.0, Logstash 2.2.0, and Kibana 4.4.0.
-
-- `E1L1K4`: Elasticsearch 1.7.3, Logstash 1.5.5, and Kibana 4.1.2.
-
-**Note** – See the documentation page for more information on pulling specific combinations of versions of Elasticsearch, Logstash and Kibana.
+This image uses  Elasticsearch, Logstash, and Kibana, collectively known as ELK.
 
 ### Documentation
 
@@ -28,9 +15,11 @@ See the [ELK Docker image documentation web page](http://elk-docker.readthedocs.
 
 ### Docker Hub
 
-This image is hosted on Docker Hub at [https://hub.docker.com/r/sebp/elk/](https://hub.docker.com/r/sebp/elk/).
+This image is hosted on Docker Hub at 
 
 ### About
 
-Written by [Sébastien Pujadas](https://pujadas.net), released under the [Apache 2 license](https://www.apache.org/licenses/LICENSE-2.0).
+This image was modified by Jim Conallen from the original image written by [Sébastien Pujadas's](https://pujadas.net). 
+It has been modified to be used to work with IBM Bluemix applications and be hosted in IBM Bluemix Docker Containers.  
+It remains released under the [Apache 2 license](https://www.apache.org/licenses/LICENSE-2.0).
 

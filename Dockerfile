@@ -1,5 +1,7 @@
-# Dockerfile for ELK stack
-# Elasticsearch 2.3.2, Logstash 2.3.2, Kibana 4.5.0
+# Dockerfile for ELK stack onBluemix
+# Elasticsearch 2.3.3, Logstash 2.3.2, Kibana 4.5.1
+#
+# forked from an image created by Sébastien Pujadas(https://pujadas.net)
 
 # Build with:
 # docker build -t <repo-user>/elk .
@@ -8,8 +10,8 @@
 # docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -p 5000:5000 -it --name elk <repo-user>/elk
 
 FROM phusion/baseimage
-MAINTAINER Sebastien Pujadas http://pujadas.net
-ENV REFRESHED_AT 2016-04-07
+MAINTAINER Jim Conallen 
+ENV REFRESHED_AT 2016-05-19
 
 ###############################################################################
 #                                INSTALLATION
@@ -37,7 +39,7 @@ RUN set -x \
 
 ### install Elasticsearch
 
-ENV ES_VERSION 2.3.2
+ENV ES_VERSION 2.3.3
 
 RUN curl http://packages.elasticsearch.org/GPG-KEY-elasticsearch | apt-key add -
 RUN echo deb http://packages.elasticsearch.org/elasticsearch/2.x/debian stable main > /etc/apt/sources.list.d/elasticsearch-2.x.list
@@ -71,7 +73,8 @@ RUN sed -i -e 's#^LS_HOME=$#LS_HOME='$LOGSTASH_HOME'#' /etc/init.d/logstash \
 
 ### install Kibana
 
-ENV KIBANA_VERSION 4.5.0
+ENV KIBANA_MAJOR 4.5
+ENV KIBANA_VERSION 4.5.1
 ENV KIBANA_HOME /opt/kibana
 ENV KIBANA_PACKAGE kibana-${KIBANA_VERSION}-linux-x64.tar.gz
 
@@ -97,27 +100,14 @@ RUN sed -i -e 's#^KIBANA_HOME=$#KIBANA_HOME='$KIBANA_HOME'#' /etc/init.d/kibana 
 
 ADD ./elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
 
-
 ### configure Logstash
 
-# certs/keys for Beats and Lumberjack input
-RUN mkdir -p /etc/pki/tls/certs && mkdir /etc/pki/tls/private
-ADD ./logstash-forwarder.crt /etc/pki/tls/certs/logstash-forwarder.crt
-ADD ./logstash-forwarder.key /etc/pki/tls/private/logstash-forwarder.key
-ADD ./logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
-ADD ./logstash-beats.key /etc/pki/tls/private/logstash-beats.key
-
 # filters
-ADD ./01-lumberjack-input.conf /etc/logstash/conf.d/01-lumberjack-input.conf
-ADD ./02-beats-input.conf /etc/logstash/conf.d/02-beats-input.conf
-ADD ./10-syslog.conf /etc/logstash/conf.d/10-syslog.conf
-ADD ./11-nginx.conf /etc/logstash/conf.d/11-nginx.conf
-ADD ./30-output.conf /etc/logstash/conf.d/30-output.conf
+ADD ./bluemix.conf /etc/logstash/conf.d/bluemix.conf
 
 # patterns
-ADD ./nginx.pattern ${LOGSTASH_HOME}/patterns/nginx
+ADD ./bluemix.pattern ${LOGSTASH_HOME}/patterns/bluemix
 RUN chown -R logstash:logstash ${LOGSTASH_HOME}/patterns
-
 
 ### configure logrotate
 
