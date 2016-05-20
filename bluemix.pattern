@@ -1,0 +1,2 @@
+CLOUDFOUNDRYAPP %{NOTSPACE:domain} - \[%{NOTSPACE:timex} %{NOTSPACE:milis}\] "%{HTTPMETHOD:httpmethod} %{PATH:path} %{NOTSPACE:protocol}" %{INT:response_code} %{INT:not_sure_todo}
+HTTPMETHOD (GET|PUT|POST|DELETE)
